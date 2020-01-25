@@ -1,0 +1,6 @@
+# order subject to change, the point is that we have a basic idea of what needs to be done
+
+1. change root/local admin passwords
+2. update packages with package manager
+3. close all unnecessary open ports
+4. remove shell access for all unnecessary accounts

@@ -1,0 +1,4 @@
+# order subject to change, the point is that we know what we need to do
+
+1. change administrator account passwords
+2. 

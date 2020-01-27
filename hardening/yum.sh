@@ -122,6 +122,7 @@ done < users_list
 
 
 
+curl -O rkhunter-1.4.6.tar.gz https://svwh.dl.sourceforge.net/project/rkhunter/rkhunter/1.4.6/rkhunter-1.4.6.tar.gz
 
 
 

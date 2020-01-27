@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# 1. Add default distro repos
+
 centOS_repo="[base]
 name=CentOS-$releasever - Base
 mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=
@@ -67,9 +69,14 @@ priority=2"
 
 echo "$centOS_repo" > /etc/yum.repos.d/Centos-Base1.repo
 
-# make sure that default centOS repos are there (so we can for sure install normal packages like nmap and htop)
+# 2. Install nmap, htop, 7zip (for easy encryption of sensitive data)
 
-yum install nmap htop -y
+yum install nmap htop  epel-release -y
+yum install p7zip -y
+
+# 3. Update all packages
+# 4. run nmap (pipe into file for later use)
+
 yum update -y & nmap 127.0.0.1 > open_ports.txt
 wait
 grep -A 200 PORT open_ports.txt | grep '\n' | grep -v Nmap | grep -o '[0-9]*' > open_port_numbers.txt
@@ -85,13 +92,17 @@ while True; do
 	fi
 done
 
+# 5. block unnecessary open ports (iptables)
+
 while IFS= read -r port_number; do
     iptables -A INPUT -d tcp --dport $port_number -j REJECT
     iptables -A OUTPUT -d tcp --dport $port_number -j REJECT
     # iptables -A INPUT -d udp --dport $port_number -j REJECT
     # iptables -A OUTPUT -d udp --dport $port_number -j REJECT
 done < open_port_numbers.txt
+
 cut -d: -f1 /etc/passwd > users_list.txt
+
 while IFS= read -r required_user; do
     echo -n "Input users that need bash access (including root). Enter 'done' when done"
     read required_user
@@ -101,6 +112,9 @@ while IFS= read -r required_user; do
     break
     fi
 done
+
+7. Remove all unnecessary shell access for users
+
 
 while IFS= read -r users; do
     usermod -s /sbin/nologin $users

@@ -101,6 +101,9 @@ while IFS= read -r port_number; do
     # iptables -A OUTPUT -d udp --dport $port_number -j REJECT
 done < open_port_numbers.txt
 
+rm open_port_numbers.txt && rm open_ports.txt
+nmap 127.0.0.1
+
 cut -d: -f1 /etc/passwd > users_list.txt
 
 while IFS= read -r required_user; do
@@ -113,14 +116,14 @@ while IFS= read -r required_user; do
     fi
 done
 
-7. Remove all unnecessary shell access for users
+# 7. Remove all unnecessary shell access for users
 
 
 while IFS= read -r users; do
     usermod -s /sbin/nologin $users
-done < users_list
+done < users_list.txt
 
-
+rm users_list.txt
 
 curl -O rkhunter-1.4.6.tar.gz https://svwh.dl.sourceforge.net/project/rkhunter/rkhunter/1.4.6/rkhunter-1.4.6.tar.gz
 

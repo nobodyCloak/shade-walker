@@ -75,6 +75,16 @@ wait
 grep -A 200 PORT open_ports.txt | grep '\n' | grep -v Nmap | grep -o '[0-9]*' > open_port_numbers.txt
 cat open_ports.txt
 
+while True; do
+	echo -n "Input port numbers that must NOT be closed. Number only."
+	read port_number
+	sed '/$port_number/d' open_port_numbers.txt > new_open_port_numbers.txt
+	mv new_open_port_numbers.txt open_port_numbers.txt
+	if [ $port_number = "done" ]; then
+	break
+	fi
+done
+
 while IFS= read -r port_number; do
     iptables -A INPUT -d tcp --dport $port_number -j REJECT
     iptables -A OUTPUT -d tcp --dport $port_number -j REJECT
@@ -96,20 +106,6 @@ while IFS= read -r users; do
     usermod -s /sbin/nologin $users
 done < users_list
 
-
-#!/bin/bash
-nmap localhost > open_ports.txt
-grep -A 200 PORT open_ports.txt | grep '\n' | grep -v Nmap | grep -o '[0-9]*' > open_port_numbers.txt
-cat open_ports.txt
-while True; do
-	echo -n "Input port numbers that must not be closed. Number only."
-	read port_number
-	sed '/$port_number/d' open_port_numbers.txt > new_open_port_numbers.txt
-	mv new_open_port_numbers.txt open_port_numbers.txt
-	if [ "$port_number" == "done" ]; then
-	break
-	fi
-done
 
 
 

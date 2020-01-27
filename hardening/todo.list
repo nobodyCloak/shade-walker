@@ -1,13 +1,12 @@
-The following are presented in no particular order, although some items need to happen before others can occur.
-These are needed for each linux hardening script.
+These are needed for each linux hardening script IN ORDER
 
 1. Add default distro repos
-2. Update all packages
-3. run nmap (pipe into file for later use)
-4. block unnecessary open ports (iptables)
-5. shut down unneeded processes
-6. Install htop (or other similar?)
+2. Install nmap, htop, 7zip (for easy encryption of sensitive data)
+3. Update all packages
+4. run nmap (pipe into file for later use)
+5. block unnecessary open ports (iptables)
 7. Remove all unnecessary shell access for users
-8. Install 7zip for encrypting sensitive data
+5. shut down unneeded processes
 9. Crawl to find interesting files?
-10. 
+10. Download and run rkhunter?
+11. 

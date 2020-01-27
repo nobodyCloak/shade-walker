@@ -76,9 +76,9 @@ grep -A 200 PORT open_ports.txt | grep '\n' | grep -v Nmap | grep -o '[0-9]*' > 
 cat open_ports.txt
 
 while True; do
-	echo -n "Input port numbers that must NOT be closed. Number only."
+	echo -n "Input port numbers that must NOT be closed. Number only. Enter 'done' when done"
 	read port_number
-	sed '/$port_number/d' open_port_numbers.txt > new_open_port_numbers.txt
+	sed /$port_number/d open_port_numbers.txt > new_open_port_numbers.txt
 	mv new_open_port_numbers.txt open_port_numbers.txt
 	if [ $port_number = "done" ]; then
 	break
@@ -95,9 +95,9 @@ cut -d: -f1 /etc/passwd > users_list.txt
 while IFS= read -r required_user; do
     echo -n "Input users that need bash access (including root). Enter 'done' when done"
     read required_user
-    sed '/$required_user/d' users_list.txt > new_users_list.txt
+    sed /$required_user/d users_list.txt > new_users_list.txt
     mv new_users_list.txt users_list.txt
-    if [ "$required_user" == "done" ];
+    if [ $required_user = "done" ];
     break
     fi
 done
@@ -105,6 +105,8 @@ done
 while IFS= read -r users; do
     usermod -s /sbin/nologin $users
 done < users_list
+
+
 
 
 

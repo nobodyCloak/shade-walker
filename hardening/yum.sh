@@ -71,7 +71,7 @@ echo $centOS_repo > /etc/yum.repos.d/Centos-Base1.repo
 
 # 2. Install nmap, htop, 7zip (for easy encryption of sensitive data)
 
-yum install nmap htop  epel-release -y
+yum install nmap htop iptables epel-release -y
 yum install p7zip -y
 
 # 3. Update all packages

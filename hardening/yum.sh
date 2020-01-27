@@ -67,7 +67,7 @@ gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
 priority=2"
 
-echo "$centOS_repo" > /etc/yum.repos.d/Centos-Base1.repo
+echo $centOS_repo > /etc/yum.repos.d/Centos-Base1.repo
 
 # 2. Install nmap, htop, 7zip (for easy encryption of sensitive data)
 

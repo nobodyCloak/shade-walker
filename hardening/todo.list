@@ -9,4 +9,5 @@ These are needed for each linux hardening script IN ORDER
 5. shut down unneeded processes
 9. Crawl to find interesting files?
 10. Download and run rkhunter?
-11. 
+11. Check cron jobs
+12. Check for aliases

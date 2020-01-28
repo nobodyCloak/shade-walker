@@ -1,22 +1,32 @@
 #!/bin/bash
 
 # 1. Add default distro repos
+apt-get install lsb_release -y
+lsb_release -a | grep 'Codename' > codename.txt
+codename="$(cut -f2 -d$'\t' codename.txt)
+debian_repo="deb http://deb.debian.org/debian $codename main
+deb-src http://deb.debian.org/debian $codename main
 
-debian_repo=""
+deb http://deb.debian.org/debian-security/ $codename/updates main
+deb-src http://deb.debian.org/debian-security/ $codename/updates main
 
-echo $debian_repo > /etc/yum.repos.d/Centos-Base1.repo
+deb http://deb.debian.org/debian $codename-updates main
+deb-src http://deb.debian.org/debian $codename-updates main"
+
+echo $debian_repo | sudo tee /etc/apt/sources.list.d/master.list
+
+apt-get update
 
 # 2. Install nmap, htop, 7zip (for easy encryption of sensitive data)
 apt-get install apt -y
-
 apt install nmap htop p7zip iptables -y
 
 # 3. Update all packages
 # 4. run nmap (pipe into file for later use)
 
-apt update -y & nmap 127.0.0.1 > open_ports.txt
+apt update -y & nmap -p- 127.0.0.1 -oN open_ports.txt
 wait
-apt autoremove -y
+
 grep -A 200 PORT open_ports.txt | grep '\n' | grep -v Nmap | grep -o '[0-9]*' > open_port_numbers.txt
 cat open_ports.txt
 
@@ -63,4 +73,25 @@ done < users_list.txt
 
 rm users_list.txt
 
+
+apt autoremove -y
+
 curl -O rkhunter-1.4.6.tar.gz https://svwh.dl.sourceforge.net/project/rkhunter/rkhunter/1.4.6/rkhunter-1.4.6.tar.gz
+tar -zxvf rkhunter-1.4.6.tar.gz
+sudo sh rkhunter-1.4.6/installer.sh --install
+sudo rkhunter -c --rwo --sk > rkhunter_results.txt
+cat rkhunter_results.txt
+
+# curl -O maldetect-current.tar.gz http://www.rfxn.com/downloads/maldetect-current.tar.gz
+# tar -zxvf maldetect-current.tar.gz
+# cd maldetect-*
+# sudo sh install.sh
+
+
+
+for user in $(cut -f1 -d: /etc/passwd); do
+	echo $user
+	sudo crontab -u $user -l
+done
+
+

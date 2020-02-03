@@ -11,3 +11,6 @@ These are needed for each linux hardening script IN ORDER
 10. Download and run rkhunter?
 11. Check cron jobs
 12. Check for aliases
+
+ls -a
+ls -lt

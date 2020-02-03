@@ -1,8 +1,10 @@
 #!/bin/bash
 
 # 1. Add default distro repos
-apt-get install lsb_release -y
-lsb_release -a | grep 'Codename' > codename.txt
+echo "Installing lsb-release"
+apt-get install lsb-release -y
+lsb-release -a | grep 'Codename' > codename.txt
+echo "Adding default repos just in case"
 codename="$(cut -f2 -d$'\t' codename.txt)
 debian_repo=\"deb http://deb.debian.org/debian $codename main
 deb-src http://deb.debian.org/debian $codename main
@@ -95,8 +97,8 @@ done
 # 5. block unnecessary open ports (iptables)
 
 while IFS= read -r port_number; do
-    iptables -A INPUT -d tcp --dport $port_number -j REJECT
-    iptables -A OUTPUT -d tcp --dport $port_number -j REJECT
+    sudo iptables -A INPUT -d tcp --dport $port_number -j REJECT
+    sudo iptables -A OUTPUT -d tcp --dport $port_number -j REJECT
     # iptables -A INPUT -d udp --dport $port_number -j REJECT
     # iptables -A OUTPUT -d udp --dport $port_number -j REJECT
 done < open_port_numbers.txt

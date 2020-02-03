@@ -79,7 +79,7 @@ apt install nmap htop p7zip iptables -y
 # 3. Update all packages
 # 4. run nmap (pipe into file for later use)
 
-apt update -y & nmap -p- 127.0.0.1 -oN open_ports.txt
+apt update -y & nmap -p- 127.0.0.1 -A -oN open_ports.txt
 wait
 grep -A 200 PORT open_ports.txt | grep '\n' | grep -v Nmap | grep -o '[0-9]*' > open_port_numbers.txt
 cat open_ports.txt

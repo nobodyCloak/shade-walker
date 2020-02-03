@@ -1,5 +1,7 @@
 import os
 
+file = "/"
+pathway = "test.txt"
 
 # def file_pathway(filename):
 for root, dirs, files in os.walk(file, topdown=False):

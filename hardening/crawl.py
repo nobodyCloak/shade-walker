@@ -1,22 +1,21 @@
 import os
-from pathlib import Path
 
 
 # def file_pathway(filename):
 
-print("Give the beginning pathway")
-file = input()
-print("Give output file: ")
-pathway = input()
-print("Is that correct? (y/n)")
-if input() != "y":
-    print("Nevermind...")
+print "Give the beginning pathway"
+file = raw_input()
+print "Give output file: "
+pathway = raw_input()
+print "Is that correct? (y/n)"
+if raw_input() != "y":
+    print "Nevermind..."
 else:
     for root, dirs, files in os.walk(file, topdown=False):
         for f in files:
             try:
                 current_file = os.path.join(root, f)
-                final_path = str(Path(current_file).absolute())
+                final_path = str(os.path.join(current_file))
                 print(final_path)
             except FileNotFoundError as e:
                 # print("No such file or directory: ", e)

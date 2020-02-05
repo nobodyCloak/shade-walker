@@ -1,3 +1,4 @@
+# Python 2 Directory Crawl
 import os
 
 file = "/"
